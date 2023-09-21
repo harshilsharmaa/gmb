@@ -47,7 +47,8 @@ const claimantCaseSchema = mongoose.Schema({
         default: false
     },
     NY_policy_holder: {
-        NY_policy_holder
+        type: Boolean,
+        default: false
     },
     accident_location: {
         type: String,
