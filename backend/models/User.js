@@ -1,38 +1,36 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema({
     username: {
         type: String,
-        max: 50,
+        required: true
+    },
+    email: {
+        type: String,
         required: true
     },
     password: {
         type: String,
-        max: 50,
+        minlength: 8,
         required: true
     },
     group_id: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Group'
     },
     first_name: {
         type: String,
-        max: 50,
         default: null
     },
     last_name: {
         type: String,
-        max: 50,
         default: null
     },
     phone:{
         type: Number,
         default: null 
-    },
-    email: {
-        type: String,
-        max: 50,
-        default: null
     },
     last_login_date: {
         type: Date,
@@ -54,4 +52,19 @@ const userSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.modal('User', userSchema);
+userSchema.pre('save', async function(next){
+    if(this.isModified('password')){
+        this.password = await bcrypt.hash(this.password, 12);
+    }
+    next();
+})
+
+userSchema.methods.generateJWTtoken = function(){
+    return jwt.sign({_id:this._id}, process.env.JWT_SECRET)
+}
+
+userSchema.methods.comparePassword = async function(password){
+    return await bcrypt.compare(password, this.password);
+}
+
+module.exports = mongoose.model('User', userSchema);

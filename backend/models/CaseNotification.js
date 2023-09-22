@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const caseNotificationSchema = mongoose.Schema({
     
     bi_case_id: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "ClaimantCase"
     },
     description: {
@@ -19,11 +19,11 @@ const caseNotificationSchema = mongoose.Schema({
         default: 'Acknowledged'
     },
     assigned_to: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
     user_id: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
     notification_status:{
