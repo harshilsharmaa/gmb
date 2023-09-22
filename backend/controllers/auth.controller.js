@@ -30,6 +30,7 @@ exports.register = async(req,res)=>{
         status(201).json({
             success: true,
             message: "User registered successfully",
+            user
         })
         
     } catch (error) {
@@ -74,6 +75,7 @@ exports.login = async(req,res)=>{
         status(201).json({
             success: true,
             message: "User LoggedIn successfully",
+            user
         })
         
     } catch (error) {

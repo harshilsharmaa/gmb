@@ -16,6 +16,10 @@ const userSchema = mongoose.Schema({
         minlength: 8,
         required: true
     },
+    userRole: {
+        type: String,
+        default: 'user'
+    },
     group_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Group'
